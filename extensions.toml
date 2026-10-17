@@ -1,0 +1,131 @@
+# The extensions Kuana's registry builds and serves: open-source extensions in Zed's format,
+# each built from its author's repository at the commit given here (the version
+# published in Zed's extension registry, which Zed reviewed).
+#
+# Only extensions with a clear license are listed (MIT, Apache-2.0). Add one with:
+#
+#   [<id>]
+#   repository = "https://github.com/…"   its source
+#   commit = "<full commit hash>"          what's built
+#   license = "MIT"                        the extension's license (SPDX), checked by hand
+#   path = "…"                             optional: the extension's folder in the repository
+
+[astro]
+repository = "https://github.com/zed-extensions/astro"
+commit = "1f08b4175c2c79d79af4ca950db30f5a83999d5f"
+license = "Apache-2.0"
+
+[clojure]
+repository = "https://github.com/zed-extensions/clojure"
+commit = "4d9b6d64d7dabff8ee7a6ac1af516db6375dbc76"
+license = "Apache-2.0"
+
+[csharp]
+repository = "https://github.com/zed-extensions/csharp"
+commit = "88597e19d1323c7c4c3385093d9cdcb4ee78513e"
+license = "Apache-2.0"
+
+[dart]
+repository = "https://github.com/zed-extensions/dart"
+commit = "fba74dfa66de4d123206dff56bf0b1fa20e3505d"
+license = "Apache-2.0"
+
+[dockerfile]
+repository = "https://github.com/zed-extensions/dockerfile"
+commit = "b7654306705893d3617565443e1156ff956aacbe"
+license = "Apache-2.0"
+
+[elixir]
+repository = "https://github.com/zed-extensions/elixir"
+commit = "2702e4c3049d86a38fbe300b7872bb54859be03a"
+license = "Apache-2.0"
+
+[erlang]
+repository = "https://github.com/zed-extensions/erlang"
+commit = "0dee5c98e73eb176ae8c7139ca0443d002326e5c"
+license = "Apache-2.0"
+
+[fsharp]
+repository = "https://github.com/nathanjcollins/zed-fsharp"
+commit = "61674d8c06e9e56a644ad4e359177080fc22831f"
+license = "MIT"
+
+[graphql]
+repository = "https://github.com/11bit/zed-extension-graphql"
+commit = "7337bb0ea46b0f71b0c29ef877e5d15ce5ad7252"
+license = "MIT"
+
+[haskell]
+repository = "https://github.com/zed-extensions/haskell"
+commit = "9a6687db33133a57ae48c69eb34b025cd6f06faf"
+license = "Apache-2.0"
+
+[java]
+repository = "https://github.com/zed-extensions/java"
+commit = "7cc50c1101925c3075719d29df46812aa753fbc8"
+license = "Apache-2.0"
+
+[julia]
+repository = "https://github.com/JuliaEditorSupport/zed-julia"
+commit = "cb3a9013a1d7e4123ac3e0a92237f0aba65acba7"
+license = "MIT"
+
+[lua]
+repository = "https://github.com/zed-extensions/lua"
+commit = "ce3fde1f675b32ce2de032e32609aba18cbf8121"
+license = "Apache-2.0"
+
+[ocaml]
+repository = "https://github.com/zed-extensions/ocaml"
+commit = "e4d2901242242c488feef8b4e0f408f347c60a54"
+license = "Apache-2.0"
+
+[perl]
+repository = "https://github.com/tree-sitter-perl/zed-perl"
+commit = "eb27a19e69fed8a041b706b23a1f42fbafb29fd8"
+license = "MIT"
+
+[powershell]
+repository = "https://github.com/zed-extensions/powershell"
+commit = "b1afdfe153d99686c34c4db20d8472340b789ca1"
+license = "Apache-2.0"
+
+[r]
+repository = "https://github.com/ocsmit/zed-r"
+commit = "3fa5b05688ed7499e76afbc707de0a83e33ca496"
+license = "MIT"
+
+[ruby]
+repository = "https://github.com/zed-extensions/ruby"
+commit = "b15c1a4339dbf297d18f4ac1605cddf922b3105c"
+license = "Apache-2.0"
+
+[scala]
+repository = "https://github.com/scalameta/metals-zed"
+commit = "5fe61bd8b9a221b5fd98523c99c4fcc21ddada52"
+license = "Apache-2.0"
+
+[sql]
+repository = "https://github.com/zed-extensions/sql"
+commit = "fdd2a42ab9c7f63c75becc80c9c47fb0b48fe5b8"
+license = "MIT"
+
+[svelte]
+repository = "https://github.com/zed-extensions/svelte"
+commit = "35f8d65c0e7e1b0089dc951a385e658a34b0fb23"
+license = "Apache-2.0"
+
+[terraform]
+repository = "https://github.com/zed-extensions/terraform"
+commit = "99bcfa52db879b6f71b803307a9640e04e336623"
+license = "Apache-2.0"
+
+[vue]
+repository = "https://github.com/zed-extensions/vue"
+commit = "7a57c87c8dde8b33002ea0a8e3d6e6e247fc9cca"
+license = "Apache-2.0"
+
+[zig]
+repository = "https://github.com/zed-extensions/zig"
+commit = "64fc8ac0fb074565f91764cf76ac5ff68638df8d"
+license = "Apache-2.0"

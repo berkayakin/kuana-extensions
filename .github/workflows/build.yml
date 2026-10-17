@@ -1,0 +1,104 @@
+# Builds the extensions in extensions.toml that changed (or all, when run by
+# hand with "all") and publishes them on the `packages` release: each
+# package, and index.json signed with minisign (repository secret
+# MINISIGN_SECRET_KEY, the contents of ~/.minisign/kuana-extensions.key).
+# Kuana only installs what that signature vouches for (src/extensions/registry.rs).
+#
+# Grammars are compiled and every extension is checked by Kuana itself
+# (`kuana extension check`, from Kuana's latest release), so a package that
+# Kuana can't load isn't published.
+
+name: Build extensions
+
+on:
+  push:
+    branches: [main]
+    paths: [extensions.toml, scripts/**, .github/workflows/build.yml]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Rebuild every extension
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build
+  cancel-in-progress: false
+
+env:
+  KUANA_REPO: berkayakin/kuana-editor
+  RELEASE: packages
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tools (Rust's WebAssembly target, minisign, wasi-sdk, Kuana)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rustup target add wasm32-wasip2
+          brew install minisign
+          # wasi-sdk 34, as Kuana pins it (src/wasi_sdk.rs).
+          curl -sSfL -o "$RUNNER_TEMP/wasi-sdk.tar.gz" \
+            https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-34/wasi-sdk-34.0-arm64-macos.tar.gz
+          echo "9c59398106b417f8f14913380fdf0097a8cc0ff4af9eb3ce0065a859e88d49e9  $RUNNER_TEMP/wasi-sdk.tar.gz" | shasum -a 256 -c -
+          tar -xzf "$RUNNER_TEMP/wasi-sdk.tar.gz" -C "$RUNNER_TEMP"
+          echo "WASI_SDK_PATH=$RUNNER_TEMP/wasi-sdk-34.0-arm64-macos" >> "$GITHUB_ENV"
+          gh release download --repo "$KUANA_REPO" --pattern 'Kuana-*-macos.zip' --dir "$RUNNER_TEMP/kuana"
+          ditto -x -k "$RUNNER_TEMP"/kuana/Kuana-*-macos.zip "$RUNNER_TEMP/kuana"
+          echo "KUANA=$RUNNER_TEMP/kuana/Kuana.app/Contents/MacOS/kuana" >> "$GITHUB_ENV"
+          # Kuana's settings and caches go here, not in a home folder.
+          echo "XDG_CONFIG_HOME=$RUNNER_TEMP/config" >> "$GITHUB_ENV"
+
+      - name: Previous index
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "$RELEASE" --pattern index.json --dir previous || echo "No index yet, so everything is built"
+
+      - name: Build
+        run: |
+          args=()
+          if [ "${{ inputs.all }}" = "true" ]; then args+=(--all); fi
+          python3 scripts/build.py --kuana "$KUANA" --previous previous/index.json \
+            --base-url "https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE/" --out dist "${args[@]}"
+          cat dist/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Sign the index
+        env:
+          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
+        run: |
+          if [ -z "$MINISIGN_SECRET_KEY" ]; then
+            echo "::error::Add the MINISIGN_SECRET_KEY repository secret (the contents of ~/.minisign/kuana-extensions.key)"
+            exit 1
+          fi
+          printf '%s\n' "$MINISIGN_SECRET_KEY" > "$RUNNER_TEMP/registry.key"
+          minisign -S -s "$RUNNER_TEMP/registry.key" -m dist/index.json -t "Kuana extensions"
+          rm -f "$RUNNER_TEMP/registry.key"
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$RELEASE" > /dev/null 2>&1 || gh release create "$RELEASE" --latest=false \
+            --title "Extension packages" \
+            --notes "Kuana's extension registry: packages built from their authors' repositories (see extensions.toml), and index.json, signed. Each package carries its own license."
+          shopt -s nullglob
+          gh release upload "$RELEASE" dist/packages/*.tar.gz dist/index.json dist/index.json.minisig --clobber
+          # Packages the index no longer names (older versions) go.
+          python3 - <<'EOF' | while read -r stale; do gh release delete-asset "$RELEASE" "$stale" --yes; done
+          import json, os, subprocess
+          index = json.load(open("dist/index.json"))
+          keep = {e["package"]["url"].rsplit("/", 1)[1] for e in index["extensions"]} | {"index.json", "index.json.minisig"}
+          view = ["gh", "release", "view", os.environ["RELEASE"], "--json", "assets"]
+          assets = json.loads(subprocess.run(view, capture_output=True, text=True, check=True).stdout)
+          for asset in assets["assets"]:
+              if asset["name"] not in keep:
+                  print(asset["name"])
+          EOF
