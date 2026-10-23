@@ -129,3 +129,9 @@ license = "Apache-2.0"
 repository = "https://github.com/zed-extensions/zig"
 commit = "64fc8ac0fb074565f91764cf76ac5ff68638df8d"
 license = "Apache-2.0"
+
+[oxie]
+repository = "https://github.com/oxie-lang/oxie"
+commit = "222f6a97d3489863392ba29c83a68568ec8e11a7"
+license = "MIT OR Apache-2.0"
+path = "editors/kuana-oxie"
