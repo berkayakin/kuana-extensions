@@ -135,3 +135,9 @@ repository = "https://github.com/oxie-lang/oxie"
 commit = "d08950d498cefc29b44bbb2e837e1784c7facb6c"
 license = "MIT OR Apache-2.0"
 path = "editors/kuana-oxie"
+
+[lyth]
+repository = "https://github.com/lyth-lang/lyth"
+commit = "80bc4b0d0a6643b26ef8b0bea82043acabe163d1"
+license = "MIT OR Apache-2.0"
+path = "editors/kuana-lyth"
