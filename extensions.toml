@@ -132,6 +132,6 @@ license = "Apache-2.0"
 
 [oxie]
 repository = "https://github.com/oxie-lang/oxie"
-commit = "222f6a97d3489863392ba29c83a68568ec8e11a7"
+commit = "d08950d498cefc29b44bbb2e837e1784c7facb6c"
 license = "MIT OR Apache-2.0"
 path = "editors/kuana-oxie"
