@@ -1,0 +1,18 @@
+name = "PL/SQL"
+grammar = "plsql"
+# Oracle's usual suffixes for scripts, package specs and bodies, standalone
+# procedures and functions, triggers, types and views (SQL Developer, Toad, PL/SQL Developer).
+path_suffixes = ["sql", "pls", "plb", "pks", "pkb", "pkg", "pck", "spc", "bdy", "prc", "fnc", "fct", "trg", "tps", "tpb", "typ", "vw"]
+line_comments = ["-- "]
+block_comment = { start = "/*", prefix = " * ", end = "*/", tab_size = 1 }
+tab_size = 2
+hard_tabs = false
+language_id = "plsql"
+brackets = [
+    { start = "(", end = ")", close = true, newline = true },
+    { start = "'", end = "'", close = true, newline = false, not_in = ["string", "comment"] },
+    { start = "\"", end = "\"", close = true, newline = false, not_in = ["string", "comment"] },
+]
+decrease_indent_patterns = [
+    { pattern = "(?i)^\\s*(end|else|elsif|exception|when)\\b" },
+]

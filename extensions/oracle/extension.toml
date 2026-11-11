@@ -1,0 +1,11 @@
+id = "oracle"
+name = "Oracle SQL and PL/SQL"
+version = "0.1.0"
+schema_version = 1
+description = "Oracle SQL and PL/SQL: syntax highlighting, outline, folding and indentation for packages, procedures, functions, triggers, types and scripts. Kuana's Database view (in the activity bar) connects to Oracle Database."
+authors = ["Berkay Akin"]
+repository = "https://github.com/berkayakin/kuana-extensions"
+
+[grammars.plsql]
+repository = "https://github.com/njank/tree-sitter-plsql"
+rev = "07c7accfd5fb8c58f00abd61dd6b8141376ba6be"
