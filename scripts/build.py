@@ -11,7 +11,9 @@ For each extension:
 1. fetch its repository at the listed commit;
 2. compile its own code to WebAssembly (extension.wasm), when it's for an
    extension API whose code Kuana runs (0.6, 0.7); other code is left out
-   and Kuana finds the extension's language server itself;
+   and Kuana finds the extension's language server itself. Code for Kuana's
+   own interface (views, commands, panels: `[kuana]`) becomes kuana.wasm: the
+   crate in its `kuana/` folder, else its root crate when that isn't Zed code;
 3. run `kuana extension check`, which compiles its grammars to WebAssembly
    (with wasi-sdk: WASI_SDK_PATH) and every query against them, and fails on
    errors;
@@ -42,7 +44,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # Extension APIs whose code Kuana runs (src/extensions/wasm.rs).
 KUANA_APIS = ("0.6.", "0.7.")
 # What Kuana reads from an extension, besides extension.wasm and grammars/*.wasm.
-CONTENT = ["extension.toml", "languages", "themes", "icon_themes", "snippets"]
+CONTENT = ["extension.toml", "languages", "themes", "icon_themes", "snippets", "icons"]
 LICENSE_FILE = re.compile(r"^(LICEN[CS]E|COPYING|NOTICE)", re.IGNORECASE)
 
 
@@ -69,26 +71,52 @@ def fetch(repository, commit, into):
     run(["git", "checkout", "--quiet", "FETCH_HEAD"], cwd=into)
 
 
+def crate_metadata(crate, target_dir, toolchain):
+    env = dict(os.environ, RUSTUP_TOOLCHAIN=toolchain, CARGO_TARGET_DIR=str(target_dir))
+    return env, json.loads(run(["cargo", "metadata", "--format-version", "1", "--manifest-path", crate / "Cargo.toml"], env=env))
+
+
+def zed_api(metadata):
+    """The Zed extension API a crate uses, if any."""
+    return next((p["version"] for p in metadata["packages"] if p["name"] == "zed_extension_api"), None)
+
+
+def compile_wasm(crate, env, metadata, target_dir):
+    """Builds a cdylib crate for wasm32-wasip2 (a WebAssembly component)."""
+    root = next(p for p in metadata["packages"] if p["id"] == metadata["resolve"]["root"])
+    lib = next((t["name"] for t in root["targets"] if "cdylib" in t["kind"]), None)
+    if lib is None:
+        raise Failed(f"{crate.name or 'its'} crate isn't a cdylib")
+    run(["cargo", "build", "--quiet", "--release", "--target", "wasm32-wasip2", "--manifest-path", crate / "Cargo.toml"], env=env)
+    wasm = target_dir / "wasm32-wasip2" / "release" / f"{lib.replace('-', '_')}.wasm"
+    if not wasm.is_file():
+        raise Failed(f"cargo made no {wasm.name}")
+    return wasm
+
+
 def build_code(ext, target_dir, toolchain):
-    """Compiles the extension's Rust code to a WebAssembly component. Returns
+    """Compiles the extension's Zed code to a WebAssembly component. Returns
     (the .wasm, the extension API it's for), or (None, API) when Kuana doesn't
     run code for that API."""
-    env = dict(os.environ, RUSTUP_TOOLCHAIN=toolchain, CARGO_TARGET_DIR=str(target_dir))
-    metadata = json.loads(run(["cargo", "metadata", "--format-version", "1", "--manifest-path", ext / "Cargo.toml"], env=env))
-    api = next((p["version"] for p in metadata["packages"] if p["name"] == "zed_extension_api"), None)
+    env, metadata = crate_metadata(ext, target_dir, toolchain)
+    api = zed_api(metadata)
     if api is None:
         raise Failed("its code doesn't use zed_extension_api")
     if not api.startswith(KUANA_APIS):
         return None, api
-    root = next(p for p in metadata["packages"] if p["id"] == metadata["resolve"]["root"])
-    lib = next((t["name"] for t in root["targets"] if "cdylib" in t["kind"]), None)
-    if lib is None:
-        raise Failed("its crate isn't a cdylib")
-    run(["cargo", "build", "--quiet", "--release", "--target", "wasm32-wasip2", "--manifest-path", ext / "Cargo.toml"], env=env)
-    wasm = target_dir / "wasm32-wasip2" / "release" / f"{lib.replace('-', '_')}.wasm"
-    if not wasm.is_file():
-        raise Failed(f"cargo made no {wasm.name}")
-    return wasm, api
+    return compile_wasm(ext, env, metadata, target_dir), api
+
+
+def kuana_crate(ext, manifest, target_dir, toolchain):
+    """Where the code for Kuana's own interface is: `kuana/`, else the root
+    crate when the extension has `[kuana]` and its root crate isn't Zed code."""
+    if (ext / "kuana" / "Cargo.toml").is_file():
+        return ext / "kuana"
+    if "kuana" in manifest and (ext / "Cargo.toml").is_file():
+        _, metadata = crate_metadata(ext, target_dir, toolchain)
+        if zed_api(metadata) is None:
+            return ext
+    return None
 
 
 def with_lib(manifest_text, api):
@@ -117,6 +145,8 @@ def provides(staging, manifest):
             found.append(name)
     if manifest.get("debug_adapters"):
         found.append("debug-adapters")
+    if manifest.get("kuana", {}).get("views"):
+        found.append("views")
     return found
 
 
@@ -172,7 +202,11 @@ def build_one(id, spec, args, work):
 
     notes = []
     api = None
-    if (ext / "Cargo.toml").is_file():
+    kuana = kuana_crate(ext, manifest, work / "target", args.toolchain)
+    if kuana is not None:
+        env, metadata = crate_metadata(kuana, work / "target", args.toolchain)
+        shutil.copy2(compile_wasm(kuana, env, metadata, work / "target"), staging / "kuana.wasm")
+    if (ext / "Cargo.toml").is_file() and kuana != ext:
         wasm, api = build_code(ext, work / "target", args.toolchain)
         if wasm is None:
             notes.append(f"its code is for extension API {api}, which Kuana doesn't run: left out")
