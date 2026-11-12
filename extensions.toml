@@ -291,6 +291,6 @@ path = "extensions/oracle"
 
 [c-cpp]
 repository = "https://github.com/berkayakin/kuana-extensions"
-commit = "020ac7552fa53c935dd7b26488529af414635f92"
+commit = "cf3366f6ad4e2d1c931eb50bb2511ad9d0bcd18d"
 license = "MIT OR Apache-2.0"
 path = "extensions/c-cpp"
