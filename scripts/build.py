@@ -77,8 +77,15 @@ def crate_metadata(crate, target_dir, toolchain):
 
 
 def zed_api(metadata):
-    """The Zed extension API a crate uses, if any."""
-    return next((p["version"] for p in metadata["packages"] if p["name"] == "zed_extension_api"), None)
+    """The Zed extension API a crate uses, if any: the version the crate itself
+    depends on. A crate in a bigger workspace (Zed's proto) sees every version
+    the workspace uses."""
+    packages = {p["id"]: p for p in metadata["packages"]}
+    root = metadata.get("resolve", {}).get("root")
+    node = next((n for n in metadata.get("resolve", {}).get("nodes", []) if n["id"] == root), None)
+    if node is None:
+        return next((p["version"] for p in metadata["packages"] if p["name"] == "zed_extension_api"), None)
+    return next((packages[d["pkg"]]["version"] for d in node["deps"] if packages[d["pkg"]]["name"] == "zed_extension_api"), None)
 
 
 def compile_wasm(crate, env, metadata, target_dir):
@@ -194,7 +201,11 @@ def build_one(id, spec, args, work):
             shutil.copytree(source, staging / item)
         elif source.is_file():
             shutil.copy2(source, staging / item)
-    copy_licenses(repo, staging)
+    # An extension in a folder of a bigger repository takes its own licenses
+    # when it has them: Zed's proto is Apache-2.0, while Zed's root also holds
+    # the GPL and AGPL its other crates use.
+    if ext == repo or not any(LICENSE_FILE.match(f.name) for f in ext.iterdir()):
+        copy_licenses(repo, staging)
     if ext != repo:
         copy_licenses(ext, staging)
     if not any(LICENSE_FILE.match(f.name) for f in staging.iterdir()):
