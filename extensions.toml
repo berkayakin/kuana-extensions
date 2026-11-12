@@ -15,6 +15,16 @@ repository = "https://github.com/zed-extensions/astro"
 commit = "1f08b4175c2c79d79af4ca950db30f5a83999d5f"
 license = "Apache-2.0"
 
+[biome]
+repository = "https://github.com/biomejs/biome-zed"
+commit = "23fe34e40fc8e3442b4bfbb1bc666b2da756ab06"
+license = "MIT"
+
+[blade]
+repository = "https://github.com/bajrangCoder/zed-laravel-blade"
+commit = "3bd7105d2d54367c1f6e653deffc47938bbb5e80"
+license = "MIT"
+
 [clojure]
 repository = "https://github.com/zed-extensions/clojure"
 commit = "4d9b6d64d7dabff8ee7a6ac1af516db6375dbc76"
@@ -24,6 +34,11 @@ license = "Apache-2.0"
 repository = "https://github.com/zed-extensions/csharp"
 commit = "88597e19d1323c7c4c3385093d9cdcb4ee78513e"
 license = "Apache-2.0"
+
+[csv]
+repository = "https://github.com/huacnlee/zed-csv"
+commit = "8d3c12917161220b5738bbdacd51ec247013abe3"
+license = "MIT"
 
 [dart]
 repository = "https://github.com/zed-extensions/dart"
@@ -45,14 +60,29 @@ repository = "https://github.com/zed-extensions/emmet"
 commit = "aa6ce76eda5cc267d0f8a54a8199fb0f104ec638"
 license = "Apache-2.0"
 
+[env]
+repository = "https://github.com/zarifpour/zed-env"
+commit = "e3157c31fa3cf9511af16aae3e40b712b7eec549"
+license = "MIT"
+
 [erlang]
 repository = "https://github.com/zed-extensions/erlang"
 commit = "0dee5c98e73eb176ae8c7139ca0443d002326e5c"
 license = "Apache-2.0"
 
+[fish]
+repository = "https://github.com/hasit/zed-fish"
+commit = "2f68a1daf7d32a34603d31c1257f97e5db92e265"
+license = "MIT"
+
 [fsharp]
 repository = "https://github.com/nathanjcollins/zed-fsharp"
 commit = "61674d8c06e9e56a644ad4e359177080fc22831f"
+license = "MIT"
+
+[gdscript]
+repository = "https://github.com/GDQuest/zed-gdscript"
+commit = "b61ce81d0856507a4f596b558876edc0c4cf30ff"
 license = "MIT"
 
 [git-firefly]
@@ -70,19 +100,39 @@ repository = "https://github.com/zed-extensions/haskell"
 commit = "9a6687db33133a57ae48c69eb34b025cd6f06faf"
 license = "Apache-2.0"
 
+[ini]
+repository = "https://github.com/bajrangCoder/zed-ini"
+commit = "364059ee5bc602bfd8c53bfcad7008aaacf7bc1c"
+license = "MIT"
+
 [java]
 repository = "https://github.com/zed-extensions/java"
 commit = "7cc50c1101925c3075719d29df46812aa753fbc8"
 license = "Apache-2.0"
+
+[json5]
+repository = "https://github.com/ChunzhengLab/json5-zed-extension"
+commit = "14e9d178d49adb9a2c609aade02b873d548b6671"
+license = "MIT"
 
 [julia]
 repository = "https://github.com/JuliaEditorSupport/zed-julia"
 commit = "cb3a9013a1d7e4123ac3e0a92237f0aba65acba7"
 license = "MIT"
 
+[just]
+repository = "https://github.com/jackTabsCode/zed-just"
+commit = "e14f689c9b7fe06bc3c25cda07b590f28482d5f1"
+license = "MIT"
+
 [kotlin]
 repository = "https://github.com/zed-extensions/kotlin"
 commit = "e94974ea06f6494f003efc3161691a59ea1b3300"
+license = "MIT"
+
+[log]
+repository = "https://github.com/nervenes/zed-log"
+commit = "cbbdf73a0ae75988acb7fd71cece9a76270ac49d"
 license = "MIT"
 
 [lua]
@@ -110,10 +160,25 @@ repository = "https://github.com/hasit/zed-nix"
 commit = "429479c09c5a597f31b8b53c3950cf96cec6e1f4"
 license = "MIT"
 
+[nu]
+repository = "https://github.com/zed-extensions/nu"
+commit = "6b83a0f8985efcab61e2914eb5cabbdb1dc3f5bf"
+license = "Apache-2.0"
+
 [ocaml]
 repository = "https://github.com/zed-extensions/ocaml"
 commit = "e4d2901242242c488feef8b4e0f408f347c60a54"
 license = "Apache-2.0"
+
+[odin]
+repository = "https://github.com/zed-extensions/odin"
+commit = "147d54670bac4e51aa82f6d394c5bf0ced888246"
+license = "MIT"
+
+[oxc]
+repository = "https://github.com/oxc-project/oxc-zed"
+commit = "a4d49ac01794c88149a7cacc26135ee58517c7dd"
+license = "MIT"
 
 [perl]
 repository = "https://github.com/tree-sitter-perl/zed-perl"
@@ -136,6 +201,11 @@ commit = "b6171bcc982c406c34e786c09ae26f59620e52ae"
 license = "Apache-2.0"
 path = "extensions/proto"
 
+[python-requirements]
+repository = "https://github.com/dargor/zed-python-requirements"
+commit = "8216e06e89a6c5e3f824d9902aec4f40ee2c204b"
+license = "MIT"
+
 [r]
 repository = "https://github.com/ocsmit/zed-r"
 commit = "3fa5b05688ed7499e76afbc707de0a83e33ca496"
@@ -154,6 +224,11 @@ license = "Apache-2.0"
 [scss]
 repository = "https://github.com/bajrangCoder/zed-scss"
 commit = "18deab7712272b64a4ca24ed0950618631d77fa8"
+license = "MIT"
+
+[solidity]
+repository = "https://github.com/zarifpour/zed-solidity"
+commit = "d23da97d12e16bb09253ef81da4e7ca8d5669cc8"
 license = "MIT"
 
 [sql]
