@@ -100,6 +100,16 @@ repository = "https://github.com/caius/zed-make"
 commit = "f7c5052790c20b4ec2aad87f28fc85860d151443"
 license = "MIT"
 
+[neocmake]
+repository = "https://github.com/k0tran/zed_neocmake"
+commit = "a219bbc9d700a4c00dbc53bf7c112ec57c3ad124"
+license = "MIT"
+
+[nix]
+repository = "https://github.com/hasit/zed-nix"
+commit = "429479c09c5a597f31b8b53c3950cf96cec6e1f4"
+license = "MIT"
+
 [ocaml]
 repository = "https://github.com/zed-extensions/ocaml"
 commit = "e4d2901242242c488feef8b4e0f408f347c60a54"
@@ -114,6 +124,17 @@ license = "MIT"
 repository = "https://github.com/zed-extensions/powershell"
 commit = "b1afdfe153d99686c34c4db20d8472340b789ca1"
 license = "Apache-2.0"
+
+[prisma]
+repository = "https://github.com/zed-extensions/prisma"
+commit = "4042ab27b6a084dc24fa2edd15e02f7c3d2a7f16"
+license = "Apache-2.0"
+
+[proto]
+repository = "https://github.com/zed-industries/zed"
+commit = "b6171bcc982c406c34e786c09ae26f59620e52ae"
+license = "Apache-2.0"
+path = "extensions/proto"
 
 [r]
 repository = "https://github.com/ocsmit/zed-r"
@@ -153,6 +174,11 @@ license = "Apache-2.0"
 [terraform]
 repository = "https://github.com/zed-extensions/terraform"
 commit = "99bcfa52db879b6f71b803307a9640e04e336623"
+license = "Apache-2.0"
+
+[typst]
+repository = "https://github.com/WeetHet/typst.zed"
+commit = "289ce597dfb8a639d03ef533ba60b4d79bd29dfa"
 license = "Apache-2.0"
 
 [vue]
