@@ -75,6 +75,11 @@ repository = "https://github.com/zed-extensions/lua"
 commit = "ce3fde1f675b32ce2de032e32609aba18cbf8121"
 license = "Apache-2.0"
 
+[luau]
+repository = "https://github.com/4teapo/zed-luau"
+commit = "4f803e32bfb4cd1dc6b7ae25c047f18956c1a53f"
+license = "MIT"
+
 [ocaml]
 repository = "https://github.com/zed-extensions/ocaml"
 commit = "e4d2901242242c488feef8b4e0f408f347c60a54"
