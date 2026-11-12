@@ -187,3 +187,9 @@ repository = "https://github.com/berkayakin/kuana-extensions"
 commit = "25b5c0fa03260d7ef1b5cf76e2c7a45050f00bbf"
 license = "MIT OR Apache-2.0"
 path = "extensions/oracle"
+
+[c-cpp]
+repository = "https://github.com/berkayakin/kuana-extensions"
+commit = "020ac7552fa53c935dd7b26488529af414635f92"
+license = "MIT OR Apache-2.0"
+path = "extensions/c-cpp"
