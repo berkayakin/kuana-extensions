@@ -40,6 +40,11 @@ repository = "https://github.com/zed-extensions/elixir"
 commit = "2702e4c3049d86a38fbe300b7872bb54859be03a"
 license = "Apache-2.0"
 
+[emmet]
+repository = "https://github.com/zed-extensions/emmet"
+commit = "aa6ce76eda5cc267d0f8a54a8199fb0f104ec638"
+license = "Apache-2.0"
+
 [erlang]
 repository = "https://github.com/zed-extensions/erlang"
 commit = "0dee5c98e73eb176ae8c7139ca0443d002326e5c"
@@ -49,6 +54,11 @@ license = "Apache-2.0"
 repository = "https://github.com/nathanjcollins/zed-fsharp"
 commit = "61674d8c06e9e56a644ad4e359177080fc22831f"
 license = "MIT"
+
+[git-firefly]
+repository = "https://github.com/d1y/git_firefly"
+commit = "c63c6c0287ab5c8eb3872cf2bc8803e21c7a9675"
+license = "Apache-2.0"
 
 [graphql]
 repository = "https://github.com/11bit/zed-extension-graphql"
@@ -70,6 +80,11 @@ repository = "https://github.com/JuliaEditorSupport/zed-julia"
 commit = "cb3a9013a1d7e4123ac3e0a92237f0aba65acba7"
 license = "MIT"
 
+[kotlin]
+repository = "https://github.com/zed-extensions/kotlin"
+commit = "e94974ea06f6494f003efc3161691a59ea1b3300"
+license = "MIT"
+
 [lua]
 repository = "https://github.com/zed-extensions/lua"
 commit = "ce3fde1f675b32ce2de032e32609aba18cbf8121"
@@ -78,6 +93,11 @@ license = "Apache-2.0"
 [luau]
 repository = "https://github.com/4teapo/zed-luau"
 commit = "4f803e32bfb4cd1dc6b7ae25c047f18956c1a53f"
+license = "MIT"
+
+[make]
+repository = "https://github.com/caius/zed-make"
+commit = "f7c5052790c20b4ec2aad87f28fc85860d151443"
 license = "MIT"
 
 [ocaml]
@@ -110,6 +130,11 @@ repository = "https://github.com/scalameta/metals-zed"
 commit = "5fe61bd8b9a221b5fd98523c99c4fcc21ddada52"
 license = "Apache-2.0"
 
+[scss]
+repository = "https://github.com/bajrangCoder/zed-scss"
+commit = "18deab7712272b64a4ca24ed0950618631d77fa8"
+license = "MIT"
+
 [sql]
 repository = "https://github.com/zed-extensions/sql"
 commit = "fdd2a42ab9c7f63c75becc80c9c47fb0b48fe5b8"
@@ -118,6 +143,11 @@ license = "MIT"
 [svelte]
 repository = "https://github.com/zed-extensions/svelte"
 commit = "35f8d65c0e7e1b0089dc951a385e658a34b0fb23"
+license = "Apache-2.0"
+
+[swift]
+repository = "https://github.com/zed-extensions/swift"
+commit = "302c7978f1bc3d512960531ce11000ca333d5268"
 license = "Apache-2.0"
 
 [terraform]
@@ -129,6 +159,11 @@ license = "Apache-2.0"
 repository = "https://github.com/zed-extensions/vue"
 commit = "7a57c87c8dde8b33002ea0a8e3d6e6e247fc9cca"
 license = "Apache-2.0"
+
+[xml]
+repository = "https://github.com/sweetppro/zed-xml"
+commit = "d4750d4ec15f8bcaae5db512e6beb00aac586aaf"
+license = "MIT"
 
 [zig]
 repository = "https://github.com/zed-extensions/zig"
