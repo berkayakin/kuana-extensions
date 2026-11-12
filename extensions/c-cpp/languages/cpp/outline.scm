@@ -37,6 +37,22 @@
       (reference_declarator (function_declarator declarator: (_) @name))
     ]) @definition.method)
 
+; A template member function: the definition itself is the item, so the
+; general pattern below matches the same node and this kind wins.
+(field_declaration_list
+  (template_declaration
+    (function_definition
+      declarator: [
+        (function_declarator declarator: (_) @name)
+        (pointer_declarator declarator: (function_declarator declarator: (_) @name))
+        (reference_declarator (function_declarator declarator: (_) @name))
+      ]) @definition.method))
+
+(field_declaration_list
+  (template_declaration
+    (declaration
+      declarator: (function_declarator declarator: (_) @name)) @definition.method))
+
 (function_definition
   declarator: [
     (function_declarator declarator: (_) @name)

@@ -1,6 +1,6 @@
 id = "c-cpp"
 name = "C and C++"
-version = "0.1.0"
+version = "0.2.0"
 schema_version = 1
 description = "C and C++: syntax highlighting, outline, folding and indentation, with clangd for completion, diagnostics, navigation and formatting."
 authors = ["Berkay Akin"]
@@ -19,3 +19,10 @@ name = "clangd"
 languages = ["C", "C++"]
 command = "clangd"
 install = "Install clangd: on macOS it comes with Xcode's command line tools (xcode-select --install); on Linux your distribution's clangd package (apt install clangd); or LLVM's release from clangd.llvm.org"
+
+# Install downloads clangd's own release (with the headers it reads beside
+# it) where none is on PATH. The macOS build is universal; Linux and
+# Windows builds are x86_64 only.
+[language_servers.clangd.installer]
+github = "clangd/clangd"
+assets = { "macos-aarch64" = "clangd-mac-{version}.zip", "macos-x86_64" = "clangd-mac-{version}.zip", "linux-x86_64" = "clangd-linux-{version}.zip", "windows-x86_64" = "clangd-windows-{version}.zip" }
